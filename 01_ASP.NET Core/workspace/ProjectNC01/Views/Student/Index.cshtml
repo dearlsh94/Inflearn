@@ -1,0 +1,68 @@
+<!--
+    Vaildation 매핑을 위한 Model Import
+-->
+@using ProjectNC01.ViewModels
+@model StudentTeacherViewModel
+
+@{
+    ViewData["Title"] = "Student Page";
+}
+
+<div class="text-center">
+    <h1 class="display-4">Add New Student</h1>
+    <!-- <form class="form form-horizontal"  method="POST"> : POST Token 생성 사용 안함.-->
+    <form class="form form-horizontal" method="POST" asp-antiforgery="false">
+        <div class="form-group">
+            <label>Insert Image</label>
+            <img src=""/>
+        </div>
+        <div class="form-group">
+            <div class="col-md-3">
+                <label>Name : </label>
+                <!--
+                    asp-for : Model의 Property로 매핑하여 설정. id와 name 값을 자동으로 설정해 준다.
+                    @Model : 상단 model로 선언한 Model을 참조하게 된다.3
+                    asp-validation-for : 유효성 검사 후 에러 메시지 보여주는 Element
+                -->
+                <input type="text" class="form-control" asp-for="@Model.Student.Name">
+                <span asp-validation-for="@Model.Student.Name"></span>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-md-3">
+                <label>Age : </label>
+                <input type="text" class="form-control" asp-for="@Model.Student.Age">
+                <span asp-validation-for="@Model.Student.Age"></span>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-md-3">
+                <label>Country : </label>
+                <input type="text" class="form-control" asp-for="@Model.Student.Country">
+                <span asp-validation-for="@Model.Student.Country"></span>
+            </div>
+        </div>
+        <button type="submit" class="btn btn-default">Submit</button>
+    </form>
+</div>
+
+<div class="text-center">
+    <h1 class="display-4">Out Teachers</h1>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Class</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach(var teacher in Model.Teachers)
+            {
+                <tr>
+                    <td>@teacher.Name</td>
+                    <td>@teacher.Class</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
