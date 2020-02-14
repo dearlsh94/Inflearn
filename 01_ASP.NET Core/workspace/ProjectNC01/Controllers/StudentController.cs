@@ -14,9 +14,22 @@ namespace ProjectNC01.Controllers
     {
         private readonly ILogger<StudentController> _logger;
 
+        private List<TeacherModel> teachers = new List<TeacherModel>()
+            {
+                new TeacherModel() { Name = "T1", Class = "C1" },
+                new TeacherModel() { Name = "T2", Class = "C2" },
+                new TeacherModel() { Name = "T3", Class = "C3" },
+                new TeacherModel() { Name = "T4", Class = "C4" }
+            };
+            
         public StudentController(ILogger<StudentController> logger)
         {
             _logger = logger;
+        }
+
+        public IActionResult Index()
+        {
+            return View();
         }
 
         /**
@@ -24,16 +37,8 @@ namespace ProjectNC01.Controllers
         * /Views/ 경로 내부에 해당 Controller 이름의 폴더를 생성한 뒤 IActionResult를 리턴하는 함수의 이름과 동일한 Razor View 파일 생성 (.cshtml 확장자)
         * teachers List 를 생성하여 StudentTeacherViewModel 을 View로 리턴한다.
         **/
-        public IActionResult Index() 
+        public IActionResult Student() 
         {
-            List<TeacherModel> teachers = new List<TeacherModel>()
-            {
-                new TeacherModel() { Name = "T1", Class = "C1" },
-                new TeacherModel() { Name = "T2", Class = "C2" },
-                new TeacherModel() { Name = "T3", Class = "C3" },
-                new TeacherModel() { Name = "T4", Class = "C4" }
-            };
-
             var viewModel = new StudentTeacherViewModel()
             {
                 Student = new StudentModel(),
@@ -57,8 +62,12 @@ namespace ProjectNC01.Controllers
         **/
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Index([Bind("Name, Age")]StudentTeacherViewModel model)
+        public IActionResult Student([Bind("Name, Age")]StudentModel model)
         {
+            var viewModel = new StudentTeacherViewModel();
+            viewModel.Student = model;
+            viewModel.Teachers = teachers;
+            
             // 유효성 검사 통과 여부 ( T : Pass, F : fail )
             if (ModelState.IsValid)
             {
@@ -69,7 +78,7 @@ namespace ProjectNC01.Controllers
                 // 에러 메시지    
             }
 
-            return View();
+            return View(viewModel);
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]

@@ -3,12 +3,18 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!--
+        View page 별 Title 값  설정을 위해 Razor 태그를 이용한 변수로 설정
+    -->
     <title>@ViewData["Title"] - ProjectNC01</title>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" />
 </head>
 <body>
     <header>
+        <!--
+            Navigation bar
+        -->
         <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
             <div class="container">
                 <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">ProjectNC01</a>
@@ -35,6 +41,9 @@
         </main>
     </div>
 
+    <!--
+        Footer
+    -->
     <footer class="border-top footer text-muted">
         <div class="container">
             &copy; 2020 - ProjectNC01 - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>

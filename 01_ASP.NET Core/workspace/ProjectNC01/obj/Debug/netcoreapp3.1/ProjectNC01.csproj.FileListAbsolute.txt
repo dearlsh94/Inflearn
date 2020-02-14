@@ -35,3 +35,4 @@ D:\study\Inflearn\01_ASP.NET Core\workspace\ProjectNC01\obj\Debug\netcoreapp3.1\
 D:\study\Inflearn\01_ASP.NET Core\workspace\ProjectNC01\obj\Debug\netcoreapp3.1\ProjectNC01.csproj.CopyComplete
 D:\study\Inflearn\01_ASP.NET Core\workspace\ProjectNC01\obj\Debug\netcoreapp3.1\Razor\Views\Student\Index.cshtml.g.cs
 D:\study\Inflearn\01_ASP.NET Core\workspace\ProjectNC01\obj\Debug\netcoreapp3.1\Razor\Views\Student\Privacy.cshtml.g.cs
+D:\study\Inflearn\01_ASP.NET Core\workspace\ProjectNC01\obj\Debug\netcoreapp3.1\Razor\Views\Student\Student.cshtml.g.cs

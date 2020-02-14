@@ -47,22 +47,21 @@
 
 - Model - View - Controller
 
-### Model 
+### Model (.cs)
 
 - 데이터를 다룸.
-
+- 실질적 기능.
 - DB와 연결
 - Controller 와 송수신
 
-### Controller
-
-- 로직을 담당.
+### Controller (.cs)
 
 - Web Request
+- View와 Model 연결
 - Model, View 와 송수신
 - 네이밍 : 파일명 뒤에 Controller 접미사 붙이기
 
-### View
+### View (.cshtml)
 
 - 사용자에게 실제 보여지는 부분.
 
@@ -120,6 +119,28 @@
 
 
 
+## Layout
+
+- Web Site 어느 곳에서나 동일하게 보여지는 마스터 뷰
+
+- Navigation bar, Header, Footer 등등
+
+- `/views/shared` 경로에 생성 된 `_Layout.cshtml` 파일에 구현
+
+- css, js 등 파일 import
+
+- View Page 에 해당 Layout 을 사용하겠다는 선언 필요
+
+  ```c#
+  @{
+  	Layout = "_Layout";
+  }
+  ```
+
+- Razor는 최초 실행 시 `/Views/_ViewStart.cshtml` 파일이 존재하는 지 검사하며, 존재 할 시 해당 파일 자동으로 모든 페이지에 import 하여 준다.
+
+
+
 
 
 
@@ -128,4 +149,4 @@
 
 - error CS0103: model로' 이름이 현재 컨텍스트에 없습니다.
   - @using 지시문으로 참조하는 model의 namespace 경로 또는 이름이 잘못되어 발생.
-  - HTML 주석 내부에 @model 등으로 사용 시 해당 구문 읽어서 에러 발생.
+  - HTML 주석 내부에 @model 키워드 사용 시 해당 구문 읽어서 에러 발생.

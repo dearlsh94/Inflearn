@@ -20521,6 +20521,11 @@
       "FileKind": "mvc"
     },
     {
+      "FilePath": "d:\\study\\Inflearn\\01_ASP.NET Core\\workspace\\ProjectNC01\\Views\\Student\\Student.cshtml",
+      "TargetPath": "Views\\Student\\Student.cshtml",
+      "FileKind": "mvc"
+    },
+    {
       "FilePath": "d:\\study\\Inflearn\\01_ASP.NET Core\\workspace\\ProjectNC01\\Views\\Home\\Privacy.cshtml",
       "TargetPath": "Views\\Home\\Privacy.cshtml",
       "FileKind": "mvc"
