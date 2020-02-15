@@ -105,6 +105,28 @@
 
 
 
+## Layout
+
+- Web Site 어느 곳에서나 동일하게 보여지는 마스터 뷰
+
+- Navigation bar, Header, Footer 등등
+
+- `/views/shared` 경로에 생성 된 `_Layout.cshtml` 파일에 구현
+
+- css, js 등 파일 import
+
+- View Page 에 해당 Layout 을 사용하겠다는 선언 필요
+
+  ```c#
+  @{
+  	Layout = "_Layout";
+  }
+  ```
+
+- Razor는 최초 실행 시 `/Views/_ViewStart.cshtml` 파일이 존재하는 지 검사하며, 존재 할 시 해당 파일 자동으로 모든 페이지에 import 하여 준다.
+
+
+
 ## View
 
 ### View Model
@@ -140,29 +162,81 @@
 
 ### 환경설정
 
+- `ProjectNC01.csproj` 파일에서 해당 프로젝트 환경 설정
+  - MSSQL 연결
+    - `Microsoft.EntityFrameworkCore.Tools.DotNet` : cmd에서 DB 명령 제어
 
+```C#
+<Project Sdk="Microsoft.NET.Sdk.Web">
 
+  <PropertyGroup>
+    <TargetFramework>netcoreapp2.0</TargetFramework>
+  </PropertyGroup>
 
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.All" Version="2.0.9" />
+  </ItemGroup>
 
-## Layout
+  <ItemGroup>
+    <DotNetCliToolReference Include="Microsoft.EntityFrameworkCore.Tools.DotNet" Version="2.0.0" />
+  </ItemGroup>
 
-- Web Site 어느 곳에서나 동일하게 보여지는 마스터 뷰
+  <ItemGroup>
+    <Folder Include="wwwroot\" />
+  </ItemGroup>
+</Project>
+```
 
-- Navigation bar, Header, Footer 등등
+- `app settings.json` 파일에 ConnectionStrings 설정
+  - 해당 설정을 `Startup.cs` 에 넘겨주어야 한다.
 
-- `/views/shared` 경로에 생성 된 `_Layout.cshtml` 파일에 구현
-
-- css, js 등 파일 import
-
-- View Page 에 해당 Layout 을 사용하겠다는 선언 필요
-
-  ```c#
-  @{
-  	Layout = "_Layout";
+```C#
+{
+  "ConnectionStrings": {
+    "ProjectNC01Connection": "Server=(localdb)\\MSSQLLocalDB;Database=MyApp;Trusted_Connection=True;MultipleActiveResultSets=true"
   }
-  ```
+}
+```
 
-- Razor는 최초 실행 시 `/Views/_ViewStart.cshtml` 파일이 존재하는 지 검사하며, 존재 할 시 해당 파일 자동으로 모든 페이지에 import 하여 준다.
+### DB Context
+
+- DB 접근을 도와주는 Class
+
+### Migration
+
+```
+$ dotnet ef
+
+// Project에 DB Context 설정 이후 아래 커맨드 실행
+$ dotnet ef migrations add [Migration Name]
+
+// 실행한 Migration으로 DB Update
+$ dotnet ef database update 
+
+// 특정 Migration 시점으로 DB를 되돌릴 때
+$ dotnet ef database update [Migartion Name]
+```
+
+- 마이그레이션 할 때마다 `/Migrations` 폴더 내부에 해당 이름으로 로그가 생긴다.
+
+### Seed Database
+
+- 초기 데이터 생성을 Seeding 이라고 함.
+
+- DB에 Data Insert
+
+### Repository Pattern
+
+- 많이 사용되는 Design Pattern 중 하나
+- 비즈니스 로직과 데이터 접근 레이어를 분리 시키며, 느슨한 접근 추구
+- 인터페이스를 통한 추상화를 사용
+- `/Data/Repositories` 경로에 위치
+
+
+
+## CRUD
+
+
 
 
 

@@ -1,0 +1,28 @@
+@model StudentTeacherViewModel
+
+<div class="text-center">
+    <h1 class="display-4">Our Students</h1>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Age</th>
+                <th>Detail</th>
+                <th>Edit</th>
+                <th>Del</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach(var student in Model.Students)
+            {
+                <tr>
+                    <td>@student.Name</td>
+                    <td>@student.Age</td>
+                    <td><a asp-controller="Student" asp-action="Detail" asp-route-id="@student.Id">Detail</td>
+                    <td><a asp-controller="Student" asp-action="Edit" asp-route-id="@student.Id">Edit</td>
+                    <td><a asp-controller="Student" asp-action="Delete" asp-route-id="@student.Id">Delete</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

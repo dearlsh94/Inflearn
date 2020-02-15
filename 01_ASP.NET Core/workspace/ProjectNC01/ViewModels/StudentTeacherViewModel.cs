@@ -6,6 +6,7 @@ namespace ProjectNC01.ViewModels
     public class StudentTeacherViewModel
     {
         public StudentModel Student { get; set; }
-        public List<TeacherModel> Teachers { get; set; }
+        public IEnumerable<TeacherModel> Teachers { get; set; }
+        public IEnumerable<StudentModel> Students { get; set; }
     }
 }

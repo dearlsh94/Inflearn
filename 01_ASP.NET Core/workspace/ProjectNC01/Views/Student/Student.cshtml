@@ -21,6 +21,13 @@
         </div>
         <div class="form-group">
             <div class="col-md-3">
+                <label>ID : </label>
+                <input type="text" class="form-control" asp-for="@Model.Student.Id">
+                <span asp-validation-for="@Model.Student.Id"></span>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-md-3">
                 <label>Name : </label>
                 <!--
                     asp-for : Model의 Property로 매핑하여 설정. id와 name 값을 자동으로 설정해 준다.
