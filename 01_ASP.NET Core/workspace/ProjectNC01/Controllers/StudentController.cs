@@ -52,7 +52,9 @@ namespace ProjectNC01.Controllers
          * IActionResult : 내부 로직의 결과를 View에 매핑하여 리턴 - MVC 구조에 따라서 생성해야 매핑이 됨.
          * /Views/ 경로 내부에 해당 Controller 이름의 폴더를 생성한 뒤 IActionResult를 리턴하는 함수의 이름과 동일한 Razor View 파일 생성 (.cshtml 확장자)
          * teachers List 를 생성하여 StudentTeacherViewModel 을 View로 리턴한다.
+         * [Authorize] : Login 된 유저만 접근 가능. 
          */
+        [Authorize]
         public IActionResult Student() 
         {
             var students = studentRepository.getAllStudents();

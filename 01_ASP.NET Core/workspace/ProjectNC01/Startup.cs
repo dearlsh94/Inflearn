@@ -47,6 +47,17 @@ namespace ProjectNC01
             services.AddScoped<ITeacherRepository, TeacherRepository>();
             servcies.AddScoped<IStudentRepository, StudentRepository>();
 
+            /*
+             * Identity 관리
+             * Identity<IUser, IRole>
+             */
+            services.AddIdentity<ApplicationUser, IdentityRole>(options => 
+            {
+                // Password, 계정 잠금 등 옵션 설정 가능
+                options.Password.RequriedLength = 6;
+            })
+            .AddEntityFramwork<Stores<ProjectNC01Context>();
+
             services.AddControllersWithViews();
         }
 
@@ -75,6 +86,9 @@ namespace ProjectNC01
 
             app.UseRouting();
 
+            /*
+             * 인증 기능 활성화. 반드시 MVC 환경설정 보다 위에 위치해야 함.
+             */
             app.UseAuthorization();
 
             /*

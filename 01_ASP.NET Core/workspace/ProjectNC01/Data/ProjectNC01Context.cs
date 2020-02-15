@@ -1,6 +1,6 @@
 namespace ProjectNC01.Data
 {
-    public class ProjectNC01Context : DbContext
+    public class ProjectNC01Context : IdentityDbContext<ApplicationUser>
     {
         /*
          * ctor + tab + tab 시 자동완성 가능

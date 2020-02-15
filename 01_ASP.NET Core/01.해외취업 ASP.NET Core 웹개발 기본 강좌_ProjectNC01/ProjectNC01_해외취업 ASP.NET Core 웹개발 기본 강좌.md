@@ -135,6 +135,8 @@
 - `/ViewModel` 내부 ViewModel 파일 생성
 - ViewModel Class 내부 Property로 Model 선언
 - View에서 ViewModel을 사용하였으면, Controller에서도 동일한 ViewModel 로 사용한다.
+- Entity를 View에 넘겨주는 것은 좋은 코드가 아님.
+  - Entity 내부 속성 노출을 방지하기 위해.
 
 ### View Import
 
@@ -236,9 +238,25 @@ $ dotnet ef database update [Migartion Name]
 
 ## CRUD
 
+- `/Data/Repository` 내부에 구현.
+
+- 실제 로직이 짜여진 Class와 해당 클래스의 Interface 생성.
+
+- Controller에 IRepository 전역변수를 생성하여 호출
+
+  - ```C#
+    public Controller(IRepository1 repository1, IRepository2 repository2)
+            {
+                _repository1 = repository1;
+                _repository2 = repository2;
+            }
+    ```
 
 
 
+## Identity
+
+- 계정 관리 및 OAuth 기능 구현
 
 
 
