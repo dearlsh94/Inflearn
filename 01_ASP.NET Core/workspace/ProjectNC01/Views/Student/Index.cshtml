@@ -1,6 +1,20 @@
+@model StudentTeacherViewModel
+
+@{
+    ViewData["Title"] = "Student Home";
+}
+
 <div class="container">
     <div class="jumbotron">
         <h1>Welcome - Student Index</h1>
         <a href="/Student/Student">Create Student</a>
     </div>
 </div>
+
+<!--
+    await 및 Html.PartialAsync 는 혹시 모를 Deadlock 방지를 위한 안전조치
+    "_TeacherTable" : 보여 줄 Partial View 이름
+    Model : Partial View 에 넘겨 줄 Model. (상단에 선언한 Model을 받아와서 사용.) 
+        단순 HTML만 있는 Partial View 에서는 해당 매개변수 전달하지 않아도 됨.
+-->
+@await Html.PartialAsync("_TeacherTable", Model);

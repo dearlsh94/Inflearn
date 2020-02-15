@@ -29,7 +29,13 @@ namespace ProjectNC01.Controllers
 
         public IActionResult Index()
         {
-            return View();
+            var viewModel = new StudentTeacherViewModel()
+            {
+                Student = new StudentModel(),
+                Teachers = teachers
+            };
+
+            return View(viewModel);
         }
 
         /**

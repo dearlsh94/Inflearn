@@ -8,7 +8,7 @@
     Layout View에 보여질 Title 값 설정
 -->
 @{
-    ViewData["Title"] = "Student Page";
+    ViewData["Title"] = "Student Add";
 }
 
 <div class="text-center">
@@ -49,23 +49,4 @@
     </form>
 </div>
 
-<div class="text-center">
-    <h1 class="display-4">Out Teachers</h1>
-    <table class="table">
-        <thead>
-            <tr>
-                <th>Name</th>
-                <th>Class</th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach(var teacher in Model.Teachers)
-            {
-                <tr>
-                    <td>@teacher.Name</td>
-                    <td>@teacher.Class</td>
-                </tr>
-            }
-        </tbody>
-    </table>
-</div>
+@await Html.PartialAsync("_TeacherTable", Model);

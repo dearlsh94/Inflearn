@@ -20,13 +20,12 @@
 ## 셋업
 
 - [.NET Core SDK 설치](https://www.microsoft.com/net)
+  - [Mac Install Guide](https://docs.microsoft.com/ko-kr/dotnet/core/tutorials/using-on-macos)
   - CMD에서 설치 테스트 ```$dotnet```
-
 - Visual Studio 또는 Visual Studio Code 설치
   - 강의는 VS로 진행하지만, VS Code 환경에서 실습할 것임. (더 가벼운 환경이라)
 - [VS code 에서 C# 플러그인 설치](https://docs.microsoft.com/ko-kr/dotnet/core/tutorials/with-visual-studio-code)
   - Extension - C# 검색 - C# for Visual Studio Code 설치
-
 - [VS code 에서 .NET Core 다루기](https://code.visualstudio.com/docs/languages/dotnet)
 
 
@@ -86,11 +85,9 @@
   - `/Views/_ViewImports.cshtml` 파일에 TagHelper 설정
 
     ```
-    @using ProjectNC01
-    @using ProjectNC01.Models
     @addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
     ```
-
+    
     - `/Views` 내부 Razor View 파일에서 asp-validation-for 등 TagHelper를 사용할 수 있도록 설정
 
 - Model 클래스에 선언 된 Property에 유효 조건을 설정한다.
@@ -108,12 +105,40 @@
 
 
 
-## View Model
+## View
+
+### View Model
 
 - 여러 Model을 한 View에 보여질 수 있게 한다.
 - `/ViewModel` 내부 ViewModel 파일 생성
 - ViewModel Class 내부 Property로 Model 선언
 - View에서 ViewModel을 사용하였으면, Controller에서도 동일한 ViewModel 로 사용한다.
+
+### View Import
+
+- `ViewImports.cshtml` 내부에 model namespace 위치를 추가하여 View 파일에서 선언 할 필요 없게한다.
+
+  - ```C#
+    @using ProjectNC01
+    @using ProjectNC01.Models
+    ```
+
+### Partial View
+
+- 여러 View에서 공통으로 사용되는 코드가 있을 경우에 사용
+
+- 파일명 앞에 `_` 접두어를 붙여 Partial View 임을 구분하는 것이 암묵적인 룰
+
+
+
+## Entity Framework Core
+
+- 객체 관계형 매퍼 (ORM : Object Relational Mapping) - DB와 객체지향 프로그래밍 간 호환되지 않는 객체 구조 매핑
+- 객체 지향적으로 DB와 소통하여 SQL 문법 탈피
+- 코드 가독성 향상 및 독립적 DB 관리 가능
+- 가볍고, 확장 가능하며, 크로스 플랫폼 지원 가능
+
+### 환경설정
 
 
 
