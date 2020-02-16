@@ -7,12 +7,14 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using ProjectNC01.Models;
 using ProjectNC01.ViewModels;
+using ProjectNC01.Data.Repositories;
+using Microsoft.AspNetCore.Authorization;
 
 namespace ProjectNC01.Controllers
 {
     public class StudentController : Controller
     {
-        private readonly ITeachersRepository _teacherRepository;
+        private readonly ITeacherRepository _teacherRepository;
         private readonly IStudentRepository _studentRepository;
         private readonly ILogger<StudentController> _logger;
 
@@ -24,11 +26,12 @@ namespace ProjectNC01.Controllers
                 new TeacherModel() { Name = "T4", Class = "C4" }
             };
         
-        public StudentController(ITeachersRepository teacherRepository, IStudentRepository studentRepository)
+        public StudentController(ITeacherRepository teacherRepository, IStudentRepository studentRepository)
         {
             _teacherRepository = teacherRepository;
             _studentRepository = studentRepository;
         }
+        
 
         public StudentController(ILogger<StudentController> logger)
         {
@@ -54,10 +57,10 @@ namespace ProjectNC01.Controllers
          * teachers List 를 생성하여 StudentTeacherViewModel 을 View로 리턴한다.
          * [Authorize] : Login 된 유저만 접근 가능. 
          */
-        [Authorize]
+        [Authorize(Roles="Admin")]
         public IActionResult Student() 
         {
-            var students = studentRepository.getAllStudents();
+            var students = _studentRepository.GetAllStudents();
 
             var viewModel = new StudentTeacherViewModel()
             {
@@ -82,6 +85,7 @@ namespace ProjectNC01.Controllers
          */
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles="Admin")]
         public IActionResult Student([Bind("Name, Age")]StudentModel model)
         {
             var viewModel = new StudentTeacherViewModel();
@@ -92,8 +96,8 @@ namespace ProjectNC01.Controllers
             if (ModelState.IsValid)
             {
                 // model 데이터를 Student 테이블에 저장
-                studentRepository.AddStudent(model.Student);
-                studentRepository.Save();
+                _studentRepository.AddStudent(model);
+                _studentRepository.Save();
 
                 // Clear Input Data
                 ModelState.Clear();
@@ -103,8 +107,8 @@ namespace ProjectNC01.Controllers
                 // 에러 메시지    
             }
 
-            var students = studentRepository.getAllStudents();
-            viewModel.Student = new Student();
+            var students = _studentRepository.GetAllStudents();
+            viewModel.Student = new StudentModel();
             viewModel.Students = students;
 
             return View(viewModel);
@@ -112,28 +116,28 @@ namespace ProjectNC01.Controllers
 
         public IActionResult Detail(string Id)
         {
-            Student result = _studentRepository.getStudent(Id);
+            StudentModel result = _studentRepository.GetStudent(Id);
 
             return View(result);
         }
 
         public IActionResult Edit(string Id)
         {
-            var result = _studentRepository.GetStudent(id);
+            var result = _studentRepository.GetStudent(Id);
 
-            return result;
+            return View(result);
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Edit(Student student)
+        public IActionResult Edit(StudentModel student)
         {
             if (ModelState.IsValid)
             {
-                _studentRepository.Edit(Id);
-                studentRepository.Save();
+                _studentRepository.Edit(student);
+                _studentRepository.Save();
                 
-                result = _studentRepository.getStudent(Id);
+                var result = _studentRepository.GetStudent(student.Id);
                 
                 return RedirectToAction("Student");
             }
@@ -141,11 +145,11 @@ namespace ProjectNC01.Controllers
             return View(student);
         }
 
-        public IActionResult Delete(int id)
+        public IActionResult Delete(string Id)
         {
-            var result = _studentRepository.GetStudent(id);
+            var student = _studentRepository.GetStudent(Id);
 
-            if (result != null)
+            if (student != null)
             {
                 _studentRepository.Delete(student);
                 _studentRepository.Save();

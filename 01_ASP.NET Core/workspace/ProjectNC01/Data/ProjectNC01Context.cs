@@ -1,12 +1,15 @@
+using ProjectNC01.Models;
+
 namespace ProjectNC01.Data
 {
-    public class ProjectNC01Context : IdentityDbContext<ApplicationUser>
+    public class ProjectNC01Context // : IdentityDbContext<ApplicationUser>
     {
+        public ProjectNC01Context() {}
         /*
          * ctor + tab + tab 시 자동완성 가능
          * base class에 환경설정 정보 전달
          */
-        public ProjectNC01Context(DbContextOptions options) : base(options) {}
+        // public ProjectNC01Context(DbContextOptions options) : base(options) {}
         
         /*
          * 객체와 DB Table 매핑
@@ -14,7 +17,7 @@ namespace ProjectNC01.Data
          *
          * public DBSet <[Object Class]> [TableName] { get; set; }
          */
-        public DBSet<Student> Students { get; set; }
-        public DBSet<Teacher> Teachers { get; set; }
+        // public DBSet<Student> Students { get; set; }
+        // public DBSet<Teacher> Teachers { get; set; }
     }
 }

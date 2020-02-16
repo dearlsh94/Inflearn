@@ -24,15 +24,32 @@
                 </button>
                 <div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse">
                     <ul class="navbar-nav flex-grow-1">
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Student" asp-action="Index">Student</a>
-                        </li>
+                        <!--
+                            User 인증 여부와 Role 여부에 따라 코드를 보이게 함.
+                        -->
+                        @if (User.Identity.IsAuthenticated)
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+                            </li>
+                        }
+                        @if (User.Identity.IsAuthenticated && User.IsInRole("Admin"))
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Student" asp-action="Index">Student</a>
+                            </li>
+                        }
                     </ul>
                     <ul class="navbar-nav pull-right">
-                        <li asp-controller="Account" asp-action="Register">회원가입</li>
+                        @if (User.Identity.IsAuthenticated)
+                        {
+                            <li asp-controller="Account" asp-action="Logout">로그아웃</li>
+                        }
+                        else {
+                            <li asp-controller="Account" asp-action="Register">회원가입</li>
+                            <li asp-controller="Account" asp-action="Login">로그인</li>
+                        }
+                        
                     </ul>
                 </div>
             </div>

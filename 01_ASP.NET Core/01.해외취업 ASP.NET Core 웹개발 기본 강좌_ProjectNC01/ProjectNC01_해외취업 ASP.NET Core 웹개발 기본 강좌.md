@@ -256,9 +256,17 @@ $ dotnet ef database update [Migartion Name]
 
 ## Identity
 
-- 계정 관리 및 OAuth 기능 구현
+- 계정 관리
+- 인증 되지 않은 사용자 접근 차단
+- 사용자 별 접근 권한 관리 가능
+- UserManager, RoleManager Class 지원
 
 
+
+## Fin
+
+- .NET Core는 Web API 로도 사용을 많이 하며, Back-end로 분리해서 사용 가능하다.
+- Razor View는 jQuery 및 Ajax와 함께 많이 사용되며, Angular 또는 React 와 함께 사용 가능하다.
 
 
 

@@ -7,6 +7,10 @@
 <div class="text-center">
     <h1 class="display-4">Add New Account</h1>
     <form class="form form-horizontal" method="POST">
+        <!--
+            서버에서 생성 된 에러 메시지 표시
+        -->
+        <div asp-validation-summary="All" class="text-danger"></div>
         <div class="form-group">
             <div class="col-md-3">
                 <label asp-for="Email">Email : </label>
@@ -16,9 +20,9 @@
         </div>
         <div class="form-group">
             <div class="col-md-3">
-                <label asp-for="Name">Name : </label>
-                <input type="text" class="form-control" asp-for="Name">
-                <span class="text-danger" asp-validation-for="Name"></span>
+                <label asp-for="FullName">FullName : </label>
+                <input type="text" class="form-control" asp-for="FullName">
+                <span class="text-danger" asp-validation-for="FullName"></span>
             </div>
         </div>
         <div class="form-group">

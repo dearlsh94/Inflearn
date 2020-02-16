@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using ProjectNC01.Data.Repositories;
 
 namespace ProjectNC01
 {
@@ -29,9 +30,11 @@ namespace ProjectNC01
          */
         public void ConfigureServices(IServiceCollection services)
         {
+            /* 
             services.AddDbContext<ProjectNC01Context>(options => {
                 options.UseSqlServer(configuration.GetConnectionString("ProjectNC01Context"));
             });
+            */
 
             /*
              * DbSeeder Class를 IServiceCollection에 추가하는 작업
@@ -42,21 +45,24 @@ namespace ProjectNC01
                     데이터 접근 컴포넌트에서 많이 사용.
              * AddSingleton : Web App 생명 주기 중 단 한번만 생성, HTTP 요청이 올 때마다 같은 인스턴스 사용.
                     정적 데이터 메모리 저장이 필요할 경우 사용.
-             */
+             
             services.AddTransient<DbSeeder>();
+            */
             services.AddScoped<ITeacherRepository, TeacherRepository>();
-            servcies.AddScoped<IStudentRepository, StudentRepository>();
+            services.AddScoped<IStudentRepository, StudentRepository>();
+            
 
             /*
              * Identity 관리
              * Identity<IUser, IRole>
-             */
+             
             services.AddIdentity<ApplicationUser, IdentityRole>(options => 
             {
                 // Password, 계정 잠금 등 옵션 설정 가능
                 options.Password.RequriedLength = 6;
             })
             .AddEntityFramwork<Stores<ProjectNC01Context>();
+            */
 
             services.AddControllersWithViews();
         }
@@ -65,7 +71,7 @@ namespace ProjectNC01
         /*
          * HTTP Web 요청 수신 시 어떻게 처리 할 지 정의
          */
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, DbSeeder seeder)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env) //, DbSeeder seeder)
         {
             if (env.IsDevelopment())
             {
@@ -100,10 +106,10 @@ namespace ProjectNC01
             {
                 endpoints.MapControllerRoute(
                     name: "default",
-                    pattern: "{controller=Student}/{action=Index}/{id?}");
+                    pattern: "{controller=Account}/{action=Login}/{id?}");
             });
 
-            seeder.SeedDatabase().Wait();
+            // seeder.SeedDatabase().Wait();
         }
     }
 }

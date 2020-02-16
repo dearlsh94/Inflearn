@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using ProjectNC01.Models;
 
 namespace ProjectNC01.ViewModels

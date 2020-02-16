@@ -75,3 +75,8 @@ D:/study/Inflearn/01_ASP.NET Core/workspace/ProjectNC01/obj/Debug/netcoreapp3.1/
 /Users/mac/Desktop/Study/Inflearn/01_ASP.NET Core/workspace/ProjectNC01/bin/Debug/netcoreapp3.1/ProjectNC01.Views.pdb
 /Users/mac/Desktop/Study/Inflearn/01_ASP.NET Core/workspace/ProjectNC01/obj/Debug/netcoreapp3.1/ProjectNC01.Views.pdb
 /Users/mac/Desktop/Study/Inflearn/01_ASP.NET Core/workspace/ProjectNC01/obj/Debug/netcoreapp3.1/ProjectNC01.csproj.CopyComplete
+/Users/mac/Desktop/Study/Inflearn/01_ASP.NET Core/workspace/ProjectNC01/obj/Debug/netcoreapp3.1/Razor/Views/Account/Register.cshtml.g.cs
+/Users/mac/Desktop/Study/Inflearn/01_ASP.NET Core/workspace/ProjectNC01/obj/Debug/netcoreapp3.1/Razor/Views/Student/Detail.cshtml.g.cs
+/Users/mac/Desktop/Study/Inflearn/01_ASP.NET Core/workspace/ProjectNC01/obj/Debug/netcoreapp3.1/Razor/Views/Student/Edit.cshtml.g.cs
+/Users/mac/Desktop/Study/Inflearn/01_ASP.NET Core/workspace/ProjectNC01/obj/Debug/netcoreapp3.1/Razor/Views/Student/_StudentTable.cshtml.g.cs
+/Users/mac/Desktop/Study/Inflearn/01_ASP.NET Core/workspace/ProjectNC01/obj/Debug/netcoreapp3.1/Razor/Views/Account/Login.cshtml.g.cs
