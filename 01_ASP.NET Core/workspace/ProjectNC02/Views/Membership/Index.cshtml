@@ -1,0 +1,14 @@
+@model LoginInfoViewModel
+
+@{
+    ViewData["Title"] = "Membership";
+    if (TempData.Peek("Message") != null) {
+        ViewData["Message"] = TempData.Peek("Message");
+    }        
+}
+
+<div class="text-center">
+    <h1 class="display-4">@ViewData["Title"]</h1>
+    <span class="text-primary">@ViewData["Message"]</span>
+
+</div>
