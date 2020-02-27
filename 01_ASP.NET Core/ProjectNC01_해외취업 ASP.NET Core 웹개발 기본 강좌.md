@@ -20,13 +20,12 @@
 ## 셋업
 
 - [.NET Core SDK 설치](https://www.microsoft.com/net)
+  - [Mac Install Guide](https://docs.microsoft.com/ko-kr/dotnet/core/tutorials/using-on-macos)
   - CMD에서 설치 테스트 ```$dotnet```
-
 - Visual Studio 또는 Visual Studio Code 설치
   - 강의는 VS로 진행하지만, VS Code 환경에서 실습할 것임. (더 가벼운 환경이라)
 - [VS code 에서 C# 플러그인 설치](https://docs.microsoft.com/ko-kr/dotnet/core/tutorials/with-visual-studio-code)
   - Extension - C# 검색 - C# for Visual Studio Code 설치
-
 - [VS code 에서 .NET Core 다루기](https://code.visualstudio.com/docs/languages/dotnet)
 
 
@@ -86,11 +85,9 @@
   - `/Views/_ViewImports.cshtml` 파일에 TagHelper 설정
 
     ```
-    @using ProjectNC01
-    @using ProjectNC01.Models
     @addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
     ```
-
+    
     - `/Views` 내부 Razor View 파일에서 asp-validation-for 등 TagHelper를 사용할 수 있도록 설정
 
 - Model 클래스에 선언 된 Property에 유효 조건을 설정한다.
@@ -105,17 +102,6 @@
   - Server에서는 해당 Token 값을 검사하여 Client가 보낸 데이터가 맞는 지 확인한다.
   - Controller 에 선언된 `[HttpPost]` 하단 `[ValidateAntiForgeryToken]` 설정
   - 보안을 위해 POST에는 항상 사용하기를 권장
-
-
-
-## View Model
-
-- 여러 Model을 한 View에 보여질 수 있게 한다.
-- `/ViewModel` 내부 ViewModel 파일 생성
-- ViewModel Class 내부 Property로 Model 선언
-- View에서 ViewModel을 사용하였으면, Controller에서도 동일한 ViewModel 로 사용한다.
-
-
 
 
 
@@ -141,7 +127,146 @@
 
 
 
+## View
 
+### View Model
+
+- 여러 Model을 한 View에 보여질 수 있게 한다.
+- `/ViewModel` 내부 ViewModel 파일 생성
+- ViewModel Class 내부 Property로 Model 선언
+- View에서 ViewModel을 사용하였으면, Controller에서도 동일한 ViewModel 로 사용한다.
+- Entity를 View에 넘겨주는 것은 좋은 코드가 아님.
+  - Entity 내부 속성 노출을 방지하기 위해.
+
+### View Import
+
+- `ViewImports.cshtml` 내부에 model namespace 위치를 추가하여 View 파일에서 선언 할 필요 없게한다.
+
+  - ```C#
+    @using ProjectNC01
+    @using ProjectNC01.Models
+    ```
+
+### Partial View
+
+- 여러 View에서 공통으로 사용되는 코드가 있을 경우에 사용
+
+- 파일명 앞에 `_` 접두어를 붙여 Partial View 임을 구분하는 것이 암묵적인 룰
+
+
+
+## Entity Framework Core
+
+- 객체 관계형 매퍼 (ORM : Object Relational Mapping) - DB와 객체지향 프로그래밍 간 호환되지 않는 객체 구조 매핑
+- 객체 지향적으로 DB와 소통하여 SQL 문법 탈피
+- 코드 가독성 향상 및 독립적 DB 관리 가능
+- 가볍고, 확장 가능하며, 크로스 플랫폼 지원 가능
+
+### 환경설정
+
+- `ProjectNC01.csproj` 파일에서 해당 프로젝트 환경 설정
+  - MSSQL 연결
+    - `Microsoft.EntityFrameworkCore.Tools.DotNet` : cmd에서 DB 명령 제어
+
+```C#
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp2.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.All" Version="2.0.9" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <DotNetCliToolReference Include="Microsoft.EntityFrameworkCore.Tools.DotNet" Version="2.0.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="wwwroot\" />
+  </ItemGroup>
+</Project>
+```
+
+- `app settings.json` 파일에 ConnectionStrings 설정
+  - 해당 설정을 `Startup.cs` 에 넘겨주어야 한다.
+
+```C#
+{
+  "ConnectionStrings": {
+    "ProjectNC01Connection": "Server=(localdb)\\MSSQLLocalDB;Database=MyApp;Trusted_Connection=True;MultipleActiveResultSets=true"
+  }
+}
+```
+
+### DB Context
+
+- DB 접근을 도와주는 Class
+
+### Migration
+
+```
+$ dotnet ef
+
+// Project에 DB Context 설정 이후 아래 커맨드 실행
+$ dotnet ef migrations add [Migration Name]
+
+// 실행한 Migration으로 DB Update
+$ dotnet ef database update 
+
+// 특정 Migration 시점으로 DB를 되돌릴 때
+$ dotnet ef database update [Migartion Name]
+```
+
+- 마이그레이션 할 때마다 `/Migrations` 폴더 내부에 해당 이름으로 로그가 생긴다.
+
+### Seed Database
+
+- 초기 데이터 생성을 Seeding 이라고 함.
+
+- DB에 Data Insert
+
+### Repository Pattern
+
+- 많이 사용되는 Design Pattern 중 하나
+- 비즈니스 로직과 데이터 접근 레이어를 분리 시키며, 느슨한 접근 추구
+- 인터페이스를 통한 추상화를 사용
+- `/Data/Repositories` 경로에 위치
+
+
+
+## CRUD
+
+- `/Data/Repository` 내부에 구현.
+
+- 실제 로직이 짜여진 Class와 해당 클래스의 Interface 생성.
+
+- Controller에 IRepository 전역변수를 생성하여 호출
+
+  - ```C#
+    public Controller(IRepository1 repository1, IRepository2 repository2)
+            {
+                _repository1 = repository1;
+                _repository2 = repository2;
+            }
+    ```
+
+
+
+## Identity
+
+- 계정 관리
+- 인증 되지 않은 사용자 접근 차단
+- 사용자 별 접근 권한 관리 가능
+- UserManager, RoleManager Class 지원
+
+
+
+## Fin
+
+- .NET Core는 Web API 로도 사용을 많이 하며, Back-end로 분리해서 사용 가능하다.
+- Razor View는 jQuery 및 Ajax와 함께 많이 사용되며, Angular 또는 React 와 함께 사용 가능하다.
 
 
 
